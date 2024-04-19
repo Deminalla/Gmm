@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Image Classifier</title>
+	</head>
+	<body>
+		<h2>Upload Image</h2>
+
+		<form action="/calculate_scores" method="post" enctype="multipart/form-data">
+			<input type="file" name="image" id="imageInput" onchange="previewImage(event)" />
+			<input type="submit" value="Upload and Predict" />
+		</form>
+
+		<h2>Selected Image:</h2>
+		<img id="selectedImage" src="#" alt="Selected Image" style="max-width: 300px; display: none;" />
+
+		<h2>Predicted Class:</h2>
+		<p id="predicted_class"></p>
+
+		<script>
+			const form = document.querySelector('form');
+
+			function previewImage(event) {
+				const selectedImage = document.getElementById('selectedImage');
+				selectedImage.style.display = 'block';
+				selectedImage.src = URL.createObjectURL(event.target.files[0]);
+			}
+
+			form.addEventListener('submit', async (e) => {
+				e.preventDefault();
+
+				const formData = new FormData(form);
+				const response = await fetch('/calculate_scores', {
+					method: 'POST',
+					body: formData,
+				});
+
+				const data = await response.text();
+				document.getElementById('predicted_class').innerText = data;
+			});
+		</script>
+	</body>
+</html>
