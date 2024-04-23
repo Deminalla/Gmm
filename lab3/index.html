@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Mask Prediction</title>
+</head>
+<body>
+    <h1>Image Mask Prediction</h1>
+    
+    <form action="/" method="post" enctype="multipart/form-data">
+        <label for="file">Upload Image:</label><br>
+        <input type="file" id="file" name="file"><br><br>
+        <input type="submit" value="Predict">
+    </form>
+    
+    {% if original_image %}
+        <h2>Original Image</h2>
+        <img src="data:image/png;base64,{{ original_image }}" alt="Original Image">
+    {% endif %}
+    
+    {% if mask %}
+        <h2>Predicted Mask</h2>
+        <img src="data:image/png;base64,{{ mask }}" alt="Predicted Mask">
+    {% endif %}
+</body>
+</html>
